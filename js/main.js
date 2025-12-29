@@ -55,13 +55,21 @@ document.addEventListener('DOMContentLoaded', function() {
             menuItem.setAttribute('data-category', item.category);
 
             menuItem.innerHTML = `
-                <div class="menu-item-header">
-                    <h3 class="menu-item-name">${item.name}</h3>
-                    <span class="menu-item-price">${item.price}</span>
-                </div>
-                ${item.description ? `<p class="menu-item-description">${item.description}</p>` : ''}
-                ${item.vegetarian ? '<span class="menu-item-tag">🌱 Vegetarian</span>' : ''}
-            `;
+    <img 
+        src="assets/images/menu/${item.image}" 
+        alt="${item.name}" 
+        class="menu-item-image"
+    >
+
+    <div class="menu-item-header">
+        <h3 class="menu-item-name">${item.name}</h3>
+        <span class="menu-item-price">${item.price}</span>
+    </div>
+
+    ${item.description ? `<p class="menu-item-description">${item.description}</p>` : ''}
+    ${item.vegetarian ? '<span class="menu-item-tag">🌱 Vegetarian</span>' : ''}
+`;
+            
 
             menuItemsContainer.appendChild(menuItem);
         });
