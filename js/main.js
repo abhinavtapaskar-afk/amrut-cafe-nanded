@@ -276,8 +276,3 @@ function sendWhatsAppOrder() {
         'color: #8b6f47; font-size: 14px;');
 });
 
-/* ===============================
-   WHATSAPP CART SYSTEM
-================================ */
-
-// Add item
