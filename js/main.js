@@ -145,7 +145,7 @@ function sendWhatsAppOrder() {
         
             <div class="qty-controls">
                 <button onclick="decreaseQty('${item.name}')">−</button>
-                <span>0</span>
+                <span id="qty-${item.name.replace(/\s+/g, '')}">0</span>
                 <button onclick="addToCart(${JSON.stringify(item)})">+</button>
                 <button onclick="removeItem('${item.name}')">❌</button>
             </div>
