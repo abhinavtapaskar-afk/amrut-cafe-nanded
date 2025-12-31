@@ -280,8 +280,6 @@ function sendWhatsAppOrder() {
    WHATSAPP CART SYSTEM
 ================================ */
 
-let cart = {};
-
 // Add item
 function addToCart(name) {
     if (cart[name]) {
