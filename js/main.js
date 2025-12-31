@@ -2,10 +2,84 @@
    AMRUT CAFE - MAIN JAVASCRIPT
    Handles menu filtering, mobile navigation, and interactions
    =================================== */
-   let cart = {};
+
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+
+    // ================= CART SYSTEM =================
+let cart = [];
+
+function addToCart(item) {
+    const existing = cart.find(i => i.name === item.name);
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ ...item, qty: 1 });
+    }
+    updateCartUI();
+}
+
+function increaseQty(name) {
+    const item = cart.find(i => i.name === name);
+    if (item) item.qty++;
+    updateCartUI();
+}
+
+function decreaseQty(name) {
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+
+    item.qty--;
+    if (item.qty === 0) {
+        cart = cart.filter(i => i.name !== name);
+    }
+    updateCartUI();
+}
+
+function removeItem(name) {
+    cart = cart.filter(i => i.name !== name);
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const cartBox = document.getElementById("cart-items");
+    if (!cartBox) return;
+
+    cartBox.innerHTML = "";
+
+    cart.forEach(item => {
+        cartBox.innerHTML += `
+            <div class="cart-item">
+                <strong>${item.name}</strong>
+                <div class="cart-controls">
+                    <button onclick="decreaseQty('${item.name}')">−</button>
+                    <span>${item.qty}</span>
+                    <button onclick="increaseQty('${item.name}')">+</button>
+                    <button onclick="removeItem('${item.name}')">❌</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function sendWhatsAppOrder() {
+    if (cart.length === 0) {
+        alert("Cart is empty");
+        return;
+    }
+
+    let message = "Hi Amrut Cafe, I want to order:%0A";
+    cart.forEach(item => {
+        message += `• ${item.name} x ${item.qty}%0A`;
+    });
+
+    window.open(
+        `https://wa.me/919665168193?text=${message}`,
+        "_blank"
+    );
+}
+
     
     // ========== MOBILE NAVIGATION ==========
     const hamburger = document.querySelector('.hamburger');
@@ -71,89 +145,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
             <div class="qty-controls">
                 <button onclick="decreaseQty('${item.name}')">−</button>
-                <span id="qty-${item.name.replace(/\s+/g, '')}">0</span>
-                <button onclick="increaseQty('${item.name}', '${item.price}')">+</button>
+                <span>0</span>
+                <button onclick="addToCart(${JSON.stringify(item)})">+</button>
                 <button onclick="removeItem('${item.name}')">❌</button>
             </div>
         `;
         
+        
 
         // ================= CART SYSTEM =================
-
-let cart = [];
-
-function addToCart(item) {
-    const existing = cart.find(i => i.name === item.name);
-
-    if (existing) {
-        existing.qty += 1;
-    } else {
-        cart.push({ ...item, qty: 1 });
-    }
-
-    updateCartUI();
-}
-
-function increaseQty(name) {
-    const item = cart.find(i => i.name === name);
-    if (item) item.qty++;
-    updateCartUI();
-}
-
-function decreaseQty(name) {
-    const item = cart.find(i => i.name === name);
-    if (!item) return;
-
-    item.qty--;
-    if (item.qty === 0) {
-        cart = cart.filter(i => i.name !== name);
-    }
-    updateCartUI();
-}
-
-function removeItem(name) {
-    cart = cart.filter(i => i.name !== name);
-    updateCartUI();
-}
-
-function updateCartUI() {
-    const cartBox = document.getElementById("cart-items");
-    if (!cartBox) return;
-
-    cartBox.innerHTML = "";
-
-    cart.forEach(item => {
-        cartBox.innerHTML += `
-            <div class="cart-item">
-                <strong>${item.name}</strong>
-                <div class="cart-controls">
-                    <button onclick="decreaseQty('${item.name}')">−</button>
-                    <span>${item.qty}</span>
-                    <button onclick="increaseQty('${item.name}')">+</button>
-                    <button onclick="removeItem('${item.name}')">❌</button>
-                </div>
-            </div>
-        `;
-    });
-}
-
-function sendWhatsAppOrder() {
-    if (cart.length === 0) {
-        alert("Cart is empty");
-        return;
-    }
-
-    let message = "Hi Amrut Cafe, I want to order:%0A";
-
-    cart.forEach(item => {
-        message += `• ${item.name} x ${item.qty}%0A`;
-    });
-
-    const phone = "919665168193";
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-}
-
-            
 
             menuItemsContainer.appendChild(menuItem);
         });
@@ -281,70 +281,3 @@ function sendWhatsAppOrder() {
 ================================ */
 
 // Add item
-function addToCart(name) {
-    if (cart[name]) {
-        cart[name]++;
-    } else {
-        cart[name] = 1;
-    }
-    renderCart();
-}
-
-// Increase quantity
-function increaseQty(name) {
-    cart[name]++;
-    renderCart();
-}
-
-// Decrease quantity
-function decreaseQty(name) {
-    if (cart[name] > 1) {
-        cart[name]--;
-    } else {
-        delete cart[name];
-    }
-    renderCart();
-}
-
-// Remove item
-function removeItem(name) {
-    delete cart[name];
-    renderCart();
-}
-
-// Render cart
-function renderCart() {
-    const cartDiv = document.getElementById("cart-items");
-    cartDiv.innerHTML = "";
-
-    for (let item in cart) {
-        cartDiv.innerHTML += `
-            <div class="cart-item">
-                <strong>${item}</strong>
-                <div class="cart-controls">
-                    <button onclick="decreaseQty('${item}')">−</button>
-                    <span>${cart[item]}</span>
-                    <button onclick="increaseQty('${item}')">+</button>
-                    <button onclick="removeItem('${item}')">❌</button>
-                </div>
-            </div>
-        `;
-    }
-}
-
-// WhatsApp message
-function sendWhatsAppOrder() {
-    if (Object.keys(cart).length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
-
-    let message = "Hi Amrut Cafe! I would like to order:%0A%0A";
-
-    for (let item in cart) {
-        message += `• ${item} x ${cart[item]}%0A`;
-    }
-
-    const phone = "919665168193";
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-}
