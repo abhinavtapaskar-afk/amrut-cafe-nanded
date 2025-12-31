@@ -275,3 +275,78 @@ function sendWhatsAppOrder() {
     console.log('%cCategories: ' + categories.join(', '), 
         'color: #8b6f47; font-size: 14px;');
 });
+
+/* ===============================
+   WHATSAPP CART SYSTEM
+================================ */
+
+let cart = {};
+
+// Add item
+function addToCart(name) {
+    if (cart[name]) {
+        cart[name]++;
+    } else {
+        cart[name] = 1;
+    }
+    renderCart();
+}
+
+// Increase quantity
+function increaseQty(name) {
+    cart[name]++;
+    renderCart();
+}
+
+// Decrease quantity
+function decreaseQty(name) {
+    if (cart[name] > 1) {
+        cart[name]--;
+    } else {
+        delete cart[name];
+    }
+    renderCart();
+}
+
+// Remove item
+function removeItem(name) {
+    delete cart[name];
+    renderCart();
+}
+
+// Render cart
+function renderCart() {
+    const cartDiv = document.getElementById("cart-items");
+    cartDiv.innerHTML = "";
+
+    for (let item in cart) {
+        cartDiv.innerHTML += `
+            <div class="cart-item">
+                <strong>${item}</strong>
+                <div class="cart-controls">
+                    <button onclick="decreaseQty('${item}')">−</button>
+                    <span>${cart[item]}</span>
+                    <button onclick="increaseQty('${item}')">+</button>
+                    <button onclick="removeItem('${item}')">❌</button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// WhatsApp message
+function sendWhatsAppOrder() {
+    if (Object.keys(cart).length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    let message = "Hi Amrut Cafe! I would like to order:%0A%0A";
+
+    for (let item in cart) {
+        message += `• ${item} x ${cart[item]}%0A`;
+    }
+
+    const phone = "919665168193";
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
