@@ -509,3 +509,29 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     margin-bottom: 12px;
 }
+
+.whatsapp-order-box {
+    margin-top: 40px;
+    padding: 20px;
+    border: 2px dashed #25D366;
+    border-radius: 12px;
+    background: #f9fff9;
+}
+
+.whatsapp-btn {
+    background-color: #25D366;
+    color: white;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+#cart-items {
+    margin-top: 15px;
+}
+
