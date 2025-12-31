@@ -150,10 +150,6 @@ function sendWhatsAppOrder() {
                 <button onclick="removeItem('${item.name}')">❌</button>
             </div>
         `;
-        
-        
-
-        // ================= CART SYSTEM =================
 
             menuItemsContainer.appendChild(menuItem);
         });
