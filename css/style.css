@@ -24,6 +24,7 @@
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
@@ -575,4 +576,32 @@ h1, h2, h3, h4, h5, h6 {
 .qty-controls button:active,
 .whatsapp-btn:active {
     transform: scale(0.92);
+}
+.call-now-btn {
+    display: block;
+    padding: 15px;
+    background-color: #1f2937;
+    color: #ffffff !important;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.open-map-btn {
+    display: block;
+    padding: 15px;
+    background-color: #4285f4;
+    color: #ffffff !important;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.call-now-btn:hover, .open-map-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
